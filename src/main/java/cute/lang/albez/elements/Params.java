@@ -20,4 +20,14 @@ public enum Params {
     public String toString() {
         return paramName;
     }
+
+    public static Params toParams(String paramName) {
+        return switch (paramName) {
+            case "intik" -> intik;
+            case "strokulya" -> strokulya;
+            case "flotik" -> flotik;
+            case "boolik" -> boolik;
+            default -> null;
+        };
+    }
 }
