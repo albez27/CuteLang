@@ -14,12 +14,6 @@ import java.util.HashMap;
 public class TestController {
     @GetMapping("/test")
     public void test() throws IOException {
-        HashMap<String, Params> map = new HashMap<>();
-        map.put("a", Params.intik);
-        map.put("b", Params.intik);
-        Function function = new Function("sum", Params.intik, map);
-        CreateFunction createFunction = new CreateFunction();
-        System.out.println(createFunction.returnFunctionBody(function));
-        ParserFile.checkIsFileCorrect();
+        ParserFile.getFunctionObject();
     }
 }

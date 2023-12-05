@@ -1,49 +1,24 @@
 package cute.lang.albez.elements;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.List;
+@Getter
+@Setter
+@AllArgsConstructor
 public class Body {
+    private String rawBody;
     private String returnStatement;
-    private List<String> loops;
-    private List<String> cases;
+    private List<Loops> loops;
+    private List<Cases> cases;
+    private List<Ifs> ifs;
     private List<OrderOperations> orderOperations;
 
-    public String getReturnStatement() {
-        return returnStatement;
-    }
+    // Сверху вниз читается файл и операции добавляются в лист в порядке чтения
 
-    public void setReturnStatement(String returnStatement) {
-        this.returnStatement = returnStatement;
-    }
-
-    public List<String> getLoops() {
-        return loops;
-    }
-
-    public void setLoops(List<String> loops) {
-        this.loops = loops;
-    }
-
-    public List<String> getCases() {
-        return cases;
-    }
-
-    public void setCases(List<String> cases) {
-        this.cases = cases;
-    }
-
-    public List<OrderOperations> getOrderOperations() {
-        return orderOperations;
-    }
-
-    public void setOrderOperations(List<OrderOperations> orderOperations) {
-        this.orderOperations = orderOperations;
-    }
-
-    public Body(String returnStatement, List<String> loops, List<String> cases, List<OrderOperations> orderOperations) {
-        this.returnStatement = returnStatement;
-        this.loops = loops;
-        this.cases = cases;
-        this.orderOperations = orderOperations;
+    public Body(String rawBody) {
+        this.rawBody = rawBody;
     }
 }

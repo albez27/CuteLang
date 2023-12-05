@@ -10,4 +10,3 @@ functik multiply intik (intik a, intik b) {
     returnik a * b;
 }
 
-
