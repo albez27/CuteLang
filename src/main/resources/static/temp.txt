@@ -1,11 +1,3 @@
-functik kvadrati nichegoshenki (intik start, intik end) {
-    whilik (start menshe end)
-    {
-    printik(start * start) <-
-    incrementik(start)
-    };
-endik}
-
 functik sum intik (intik a, intik b) {
     returnik a <+> b;
 endik}

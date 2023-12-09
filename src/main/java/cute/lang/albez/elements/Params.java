@@ -4,7 +4,9 @@ public enum Params {
     intik ("int"),
     strokulya ("String"),
     flotik ("float"),
-    boolik ("boolean");
+    boolik ("boolean"),
+    nichegoshenki ("void"),
+    dublik ("double");
 
     private String paramName;
 
@@ -27,6 +29,8 @@ public enum Params {
             case "strokulya" -> strokulya;
             case "flotik" -> flotik;
             case "boolik" -> boolik;
+            case "nichegoshenki" -> nichegoshenki;
+            case "dublik" -> dublik;
             default -> null;
         };
     }

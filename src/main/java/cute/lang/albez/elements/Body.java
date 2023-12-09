@@ -10,11 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Body {
     private String rawBody;
-    private String returnStatement;
-    private List<Loops> loops;
-    private List<Cases> cases;
-    private List<Ifs> ifs;
-    private List<OrderOperations> orderOperations;
+    private StringBuilder javaBody;
 
     // Сверху вниз читается файл и операции добавляются в лист в порядке чтения
 

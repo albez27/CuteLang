@@ -1,18 +1,19 @@
-package cute.lang.albez;
+package cute.lang.albez.parsers;
 
 import cute.lang.albez.elements.Body;
 import cute.lang.albez.elements.Function;
 import cute.lang.albez.elements.Params;
+import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class ParserFile {
     public static StringBuilder readFile() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("D:\\Studing\\maga\\albez\\src\\main\\resources\\static\\TestCase.txt"));
@@ -39,7 +40,7 @@ public class ParserFile {
         StringBuilder sb = readFile();
         int countFunctions = 0;
         List<Function> functionsList = new ArrayList<>();
-        String patternFunctik = "(functik [a-zA-Z]+ (intik|boolik|flotik|strokulya) \\((intik|boolik|flotik|strokulya) \\w+(\\, (intik|boolik|flotik|strokulya) \\w+)+\\) \\{[\\w|\\W]*?\\})+";
+        String patternFunctik = "(functik [a-zA-Z]+ (intik|boolik|flotik|strokulya|nichegoshenki|dublik) \\((intik|boolik|flotik|strokulya|dublik) \\w+(\\, (intik|boolik|flotik|strokulya|dublik) \\w+)*\\) \\{[\\w|\\W]*?endik\\})+";
 
         Pattern patternWordFunctik = Pattern.compile("functik");
         Matcher matcher = patternWordFunctik.matcher(sb.toString());
@@ -64,7 +65,7 @@ public class ParserFile {
         String returningValue = "";
         String arguments = "";
         String body = "";
-        String functionSignature = "functik ([a-zA-Z]+) (intik|boolik|flotik|strokulya) (\\([\\w|\\W]*?\\)) (\\{[\\w|\\W]+?\\})";
+        String functionSignature = "functik ([a-zA-Z]+) (intik|boolik|flotik|strokulya|nichegoshenki|dublik) (\\([\\w|\\W]*?\\)) (\\{[\\w|\\W]+?endik\\})";
         String extractParams = "(intik|boolik|flotik|strokulya) ([a-zA-Z]+)";
         Pattern extractParamsPattern = Pattern.compile(extractParams);
         Pattern extractFunctionGroups = Pattern.compile(functionSignature);
@@ -96,5 +97,34 @@ public class ParserFile {
             body = function.getFunctionBody().toString();
         }
     }
+    public List<StringBuilder> createJavaCode(List<Function> functionList){
+        List<StringBuilder> javaCodeList = new ArrayList<>();
+        for(Function function : functionList){
+            StringBuilder sb = new StringBuilder();
+            sb.append("public static ").append(function.getReturningValue()).append(" ").append(function.getFunctionName()).append(" (");
+            int count = 1;
+            for(Map.Entry<String, Params> entry : function.getParams().entrySet()){
+                sb.append(entry.getValue()).append(" ").append(entry.getKey());
+                if(count != function.getParams().size()){
+                    sb.append(", ");
+                }
+                count++;
+            }
+            sb.append(") {\n");
+            sb.append(function.getFunctionBody().getJavaBody());
+            sb.append("\n}");
+            javaCodeList.add(sb);
+        }
+        return javaCodeList;
+    }
+    public void createJavaClassFile(List<StringBuilder> functionList) throws IOException {
+        File myFile = new File("src/main/resources/static/Translated.java");
+        FileOutputStream outputStream = new FileOutputStream(myFile);
+        for(StringBuilder sb : functionList){
+            outputStream.write(sb.toString().getBytes());
+        }
 
+        outputStream.close();
+
+    }
 }
