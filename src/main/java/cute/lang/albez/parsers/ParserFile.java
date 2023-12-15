@@ -120,10 +120,11 @@ public class ParserFile {
     public void createJavaClassFile(List<StringBuilder> functionList) throws IOException {
         File myFile = new File("src/main/resources/static/Translated.java");
         FileOutputStream outputStream = new FileOutputStream(myFile);
+        outputStream.write("public class Translated {\npublic static void main(String[] args){ }".getBytes());
         for(StringBuilder sb : functionList){
             outputStream.write(sb.toString().getBytes());
         }
-
+        outputStream.write("}".getBytes());
         outputStream.close();
 
     }
